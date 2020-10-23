@@ -26,17 +26,6 @@ const firestore = new Firestore(
 // the backend server will parse json, not a form request
 app.use(bodyParser.json());
 
-// mock events data - for a real solution this data should be coming 
-// from a cloud data store
-const mockEvents = {
-    events: [
-        { title: 'an event', id: 1, description: 'something really cool' },
-        { title: 'another event', id: 2, description: 'something even cooler' }
-    ]
-};
-
-
-
 
 // health endpoint - returns an empty array
 app.get('/', (req, res) => {
@@ -89,6 +78,9 @@ app.post('/event', (req, res) => {
     const ev = { 
         title: req.body.title, 
         description: req.body.description,
+        location: req.body.location,
+        date: req.body.date,
+        time: req.body.time,
      }
 // this will create the Events collection if it does not exist
     firestore.collection("Events").add(ev).then(ret => {
